@@ -2,3 +2,27 @@
 title: 'Delete Plant'
 openapi: 'DELETE /plants/{id}'
 ---
+
+<Warning>
+This endpoint has MCP disabled to prevent accidental deletions through AI assistant interactions.
+</Warning>
+
+## Why MCP is disabled
+
+MCP is explicitly disabled for this endpoint (`x-mint.mcp.enabled: false`) as a safety measure. This prevents AI assistants from:
+
+- Automatically executing delete operations
+- Suggesting destructive actions without user confirmation
+- Creating workflows that could accidentally remove data
+
+### When to disable MCP
+
+Consider disabling MCP for endpoints that:
+- Perform destructive operations (DELETE, irreversible updates)
+- Handle sensitive data or operations
+- Require additional security verification
+- Should not be executed automatically by AI assistants
+
+### Manual usage
+
+This endpoint can still be used normally through direct API calls, but AI assistants will not have automatic access to it via MCP.

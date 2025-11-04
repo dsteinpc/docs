@@ -2,3 +2,35 @@
 title: 'Create Plant'
 openapi: 'POST /plants'
 ---
+
+## MCP Capabilities
+
+<Info>
+This endpoint is enabled for Model Context Protocol (MCP), allowing AI assistants to help users create plants through natural language interactions.
+</Info>
+
+### What MCP enables
+
+With MCP enabled for this endpoint, AI assistants can:
+
+- **Create plants automatically**: Generate the correct request body based on user descriptions
+- **Validate data**: Ensure required fields are included before making requests
+- **Generate code**: Provide complete, ready-to-use code examples for creating plants
+- **Handle errors**: Understand error responses and suggest fixes
+
+### Example AI interactions
+
+Users can ask the AI assistant:
+- "Create a new plant called 'Rose' with tag 'flower'"
+- "Show me how to add a plant using Python"
+- "What fields do I need to create a plant?"
+
+The AI assistant will use this endpoint via MCP to:
+1. Understand the required schema from the OpenAPI spec
+2. Generate the correct request format
+3. Provide working code examples
+4. Help troubleshoot any issues
+
+### Try it yourself
+
+Connect your AI assistant to the MCP server and ask it to create a plant for you!
