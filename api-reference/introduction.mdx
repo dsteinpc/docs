@@ -1,33 +1,98 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'Procore Connect API reference documentation for cross-account collaboration'
 ---
-
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
 
 ## Welcome
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+The Procore Connect API enables seamless data sharing and collaboration across Procore projects. This API reference provides comprehensive documentation for all endpoints that support cross-account collaboration workflows.
+
+## API Documentation Structure
+
+The Procore Connect API is organized into two main sections:
+
+### Core APIs
+
+The foundational APIs that power Procore Connect collaboration:
+
+- **[Share API](/api-reference/user-api/introduction#1-share-api)** - Share data between two parties with point-in-time collaboration
+- **[Query API](/api-reference/user-api/introduction#2-query-api)** - Query items in Procore's ecosystem and retrieve all attributes
+- **[Permissions API](/api-reference/user-api/introduction#3-permissions-api)** - Verify sharing permissions before data exchange
+
+### UX Behavior Endpoints
+
+Endpoints organized by user experience behaviors that enable cross-account collaboration:
+
+**Data Retention & Linking:**
+- [Retain External Data](/api-reference/procore-connect-endpoints/retain-external-data) - Permanently store external data for record keeping
+- [Link External Data](/api-reference/procore-connect-endpoints/link-external-data) - Create bidirectional links between external and internal items
+- [Selective Sharing](/api-reference/procore-connect-endpoints/selective-sharing) - Control what gets shared with granular field selection
+
+**Cross Account Collaboration:**
+- [Send Copies of Internal Data](/api-reference/procore-connect-endpoints/send-copies-internal-data) - Send copies of internal data to external accounts
+- [Engage with Open Items](/api-reference/procore-connect-endpoints/engage-open-items) - Query and interact with open external items
+- [Monitor Status of External Data](/api-reference/procore-connect-endpoints/monitor-status-external-data) - Track the status of shared data
+- [Create Copies of External Data](/api-reference/procore-connect-endpoints/create-copies-external-data) - Copy external data into your account
+- [Quick Copy of Metadata](/api-reference/procore-connect-endpoints/quick-copy-metadata) - Quickly copy only metadata from external items
+
+## OpenAPI Specification
 
 <Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  title="Procore Connect API Specification"
+  icon="file-code"
+  href="/api-reference/user-api-openapi.json"
 >
-  View the OpenAPI specification file
+  View the complete OpenAPI specification file
 </Card>
+
+The API is fully documented using OpenAPI 3.0. All endpoints, request/response schemas, and parameters are defined in the specification file.
+
+## Base URL
+
+```
+http://localhost:3001
+```
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Currently, this API does not require authentication. All endpoints are publicly accessible.
+
+<Warning>
+  This is a demonstration API. In production, you should implement proper authentication and authorization.
+</Warning>
+
+## Getting Started
+
+1. Review the [Procore Connect API Overview](/api-reference/user-api/introduction) for detailed information about core APIs
+2. Explore the [UX Behavior Endpoints](/api-reference/procore-connect-endpoints) to understand how each behavior maps to specific endpoints
+3. Reference the [OpenAPI specification](/api-reference/user-api-openapi.json) for complete endpoint details
+
+## Error Handling
+
+The API returns standard HTTP status codes:
+
+| Status Code | Description |
+|-------------|-------------|
+| `200` | Success |
+| `201` | Created |
+| `400` | Bad Request (validation errors) |
+| `403` | Forbidden (permission denied) |
+| `404` | Not Found |
+| `500` | Internal Server Error |
+
+All error responses follow this format:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "error": "Error message describing what went wrong"
+}
+```
+
+All successful responses include:
+
+```json
+{
+  "success": true,
+  "data": { ... }
+}
 ```

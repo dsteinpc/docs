@@ -83,6 +83,29 @@
             "pages": [
               "api-reference/user-api/introduction"
             ]
+          },
+          {
+            "group": "Procore Connect Endpoints",
+            "pages": [
+              {
+                "group": "Data Retention & Linking",
+                "pages": [
+                  "api-reference/procore-connect-endpoints/retain-external-data",
+                  "api-reference/procore-connect-endpoints/link-external-data",
+                  "api-reference/procore-connect-endpoints/selective-sharing"
+                ]
+              },
+              {
+                "group": "Cross Account Collaboration",
+                "pages": [
+                  "api-reference/procore-connect-endpoints/send-copies-internal-data",
+                  "api-reference/procore-connect-endpoints/engage-open-items",
+                  "api-reference/procore-connect-endpoints/monitor-status-external-data",
+                  "api-reference/procore-connect-endpoints/create-copies-external-data",
+                  "api-reference/procore-connect-endpoints/quick-copy-metadata"
+                ]
+              }
+            ]
           }
         ]
       },

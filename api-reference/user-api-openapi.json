@@ -67,6 +67,33 @@
                       "sharedBy": "user@example.com",
                       "notes": "Shared for review"
                     }
+                  },
+                  "selective": {
+                    "type": "boolean",
+                    "description": "Enable selective sharing - only share specific fields or components",
+                    "example": false
+                  },
+                  "scope": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Array of field names or components to include when selective sharing is enabled",
+                    "example": ["title", "description", "status"]
+                  },
+                  "templateId": {
+                    "type": "string",
+                    "description": "ID of custom template to use for sharing",
+                    "example": "TEMPLATE-001"
+                  },
+                  "customFields": {
+                    "type": "object",
+                    "description": "Custom fields to include in the shared data",
+                    "additionalProperties": true,
+                    "example": {
+                      "customField1": "value1",
+                      "customField2": "value2"
+                    }
                   }
                 }
               }
@@ -498,6 +525,690 @@
                           }
                         }
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/share/{shareId}/status": {
+      "get": {
+        "summary": "Monitor status of external data",
+        "description": "Retrieve the current status of shared data, including processing state and any updates",
+        "tags": [
+          "Procore Connect"
+        ],
+        "parameters": [
+          {
+            "name": "shareId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier of the share operation",
+            "example": "SHARE-1234567890-abc123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "shareId": {
+                      "type": "string",
+                      "example": "SHARE-1234567890-abc123"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["Pending", "Processing", "Completed", "Failed"],
+                      "example": "Completed"
+                    },
+                    "lastUpdated": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-11-04T17:00:00.000Z"
+                    },
+                    "progress": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100,
+                      "description": "Progress percentage (0-100)",
+                      "example": 100
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Share not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Share not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/retain": {
+      "post": {
+        "summary": "Retain external data",
+        "description": "Permanently store external data in the local account for record keeping and future reference",
+        "tags": [
+          "Procore Connect"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "externalItemId",
+                  "sourceProjectId",
+                  "targetProjectId"
+                ],
+                "properties": {
+                  "externalItemId": {
+                    "type": "string",
+                    "description": "ID of the external item to retain",
+                    "example": "EXT-ITEM-001"
+                  },
+                  "sourceProjectId": {
+                    "type": "string",
+                    "description": "ID of the source project where the item originated",
+                    "example": "PROJ-001"
+                  },
+                  "targetProjectId": {
+                    "type": "string",
+                    "description": "ID of the target project where data will be retained",
+                    "example": "PROJ-002"
+                  },
+                  "itemType": {
+                    "type": "string",
+                    "description": "Type of item being retained (e.g., RFI, Drawing, Submittal)",
+                    "example": "RFI"
+                  },
+                  "retentionReason": {
+                    "type": "string",
+                    "description": "Reason for retaining this data",
+                    "example": "Legal record keeping"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "External data retained successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "External data retained successfully"
+                    },
+                    "retentionId": {
+                      "type": "string",
+                      "example": "RETAIN-1234567890-abc123"
+                    },
+                    "retainedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-11-04T17:00:00.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required fields"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/links": {
+      "post": {
+        "summary": "Link external data with internal items",
+        "description": "Create a bidirectional link between external data and internal items to maintain context and relationships",
+        "tags": [
+          "Procore Connect"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "externalItemId",
+                  "internalItemId",
+                  "linkType"
+                ],
+                "properties": {
+                  "externalItemId": {
+                    "type": "string",
+                    "description": "ID of the external item",
+                    "example": "EXT-ITEM-001"
+                  },
+                  "internalItemId": {
+                    "type": "string",
+                    "description": "ID of the internal item",
+                    "example": "INT-ITEM-001"
+                  },
+                  "linkType": {
+                    "type": "string",
+                    "enum": ["Reference", "Related", "Dependency", "Parent"],
+                    "description": "Type of relationship between items",
+                    "example": "Reference"
+                  },
+                  "sourceProjectId": {
+                    "type": "string",
+                    "description": "ID of the source project for external item",
+                    "example": "PROJ-001"
+                  },
+                  "targetProjectId": {
+                    "type": "string",
+                    "description": "ID of the target project for internal item",
+                    "example": "PROJ-002"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Link created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Link created successfully"
+                    },
+                    "linkId": {
+                      "type": "string",
+                      "example": "LINK-1234567890-abc123"
+                    },
+                    "externalItemId": {
+                      "type": "string",
+                      "example": "EXT-ITEM-001"
+                    },
+                    "internalItemId": {
+                      "type": "string",
+                      "example": "INT-ITEM-001"
+                    },
+                    "linkType": {
+                      "type": "string",
+                      "example": "Reference"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required fields"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/items/open": {
+      "get": {
+        "summary": "Engage with open items",
+        "description": "Query and retrieve all open external items that require engagement or action",
+        "tags": [
+          "Procore Connect"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by project ID",
+            "example": "PROJ-001"
+          },
+          {
+            "name": "itemType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by item type (e.g., RFI, Drawing, Submittal)",
+            "example": "RFI"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by status",
+            "example": "Open"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Open items retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 5
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "itemId": {
+                            "type": "string",
+                            "example": "EXT-ITEM-001"
+                          },
+                          "itemType": {
+                            "type": "string",
+                            "example": "RFI"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "Open"
+                          },
+                          "sourceProjectId": {
+                            "type": "string",
+                            "example": "PROJ-001"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "Foundation Design Clarification"
+                          },
+                          "requiresAction": {
+                            "type": "boolean",
+                            "example": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/copy": {
+      "post": {
+        "summary": "Create copies of external data",
+        "description": "Create a copy of external data within the internal account for local processing and workflow management",
+        "tags": [
+          "Procore Connect"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "externalItemId",
+                  "targetProjectId"
+                ],
+                "properties": {
+                  "externalItemId": {
+                    "type": "string",
+                    "description": "ID of the external item to copy",
+                    "example": "EXT-ITEM-001"
+                  },
+                  "targetProjectId": {
+                    "type": "string",
+                    "description": "ID of the target project where copy will be created",
+                    "example": "PROJ-002"
+                  },
+                  "sourceProjectId": {
+                    "type": "string",
+                    "description": "ID of the source project",
+                    "example": "PROJ-001"
+                  },
+                  "itemType": {
+                    "type": "string",
+                    "description": "Type of item being copied",
+                    "example": "RFI"
+                  },
+                  "templateId": {
+                    "type": "string",
+                    "description": "ID of custom template to use for the copy operation",
+                    "example": "TEMPLATE-001"
+                  },
+                  "customFields": {
+                    "type": "object",
+                    "description": "Custom fields to include in the copied data",
+                    "additionalProperties": true,
+                    "example": {
+                      "customField1": "value1",
+                      "customField2": "value2"
+                    }
+                  },
+                  "includeMetadata": {
+                    "type": "boolean",
+                    "description": "Whether to include metadata in the copy",
+                    "default": true,
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Copy created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Copy created successfully"
+                    },
+                    "copyId": {
+                      "type": "string",
+                      "example": "COPY-1234567890-abc123"
+                    },
+                    "internalItemId": {
+                      "type": "string",
+                      "description": "ID of the newly created internal item",
+                      "example": "INT-ITEM-001"
+                    },
+                    "externalItemId": {
+                      "type": "string",
+                      "example": "EXT-ITEM-001"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required fields"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/copy/metadata": {
+      "post": {
+        "summary": "Quick copy of metadata",
+        "description": "Quickly copy only metadata from external items without copying the full item data",
+        "tags": [
+          "Procore Connect"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "externalItemId",
+                  "targetProjectId"
+                ],
+                "properties": {
+                  "externalItemId": {
+                    "type": "string",
+                    "description": "ID of the external item",
+                    "example": "EXT-ITEM-001"
+                  },
+                  "targetProjectId": {
+                    "type": "string",
+                    "description": "ID of the target project",
+                    "example": "PROJ-002"
+                  },
+                  "sourceProjectId": {
+                    "type": "string",
+                    "description": "ID of the source project",
+                    "example": "PROJ-001"
+                  },
+                  "metadataFields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Specific metadata fields to copy. If empty, all metadata will be copied",
+                    "example": ["title", "status", "createdAt"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Metadata copied successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Metadata copied successfully"
+                    },
+                    "metadataCopyId": {
+                      "type": "string",
+                      "example": "META-COPY-1234567890-abc123"
+                    },
+                    "copiedFields": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["title", "status", "createdAt"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required fields"
                     }
                   }
                 }
