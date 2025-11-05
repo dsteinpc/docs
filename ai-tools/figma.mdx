@@ -1,4 +1,267 @@
 ---
 title: "Figma setup"
 icon: "figma"
+description: "Integrate Figma MCP server to accelerate design-to-code workflows for Procore Connect"
 ---
+
+The Figma MCP (Model Context Protocol) server enables designers working on Procore Connect to bridge the gap between design and implementation, bringing design context directly into code generation workflows. This integration helps ensure that generated code matches your designs while maintaining consistency with Procore Connect's design system and UX patterns.
+
+## Overview
+
+The Figma MCP server provides AI agents with direct access to Figma design files, allowing them to:
+
+- **Generate code from selected frames** - Transform Figma designs into production-ready code
+- **Extract design context** - Pull variables, components, and layout data directly into your IDE
+- **Maintain design system consistency** - Use Code Connect to keep generated code aligned with your actual codebase
+- **Access design tokens** - Retrieve colors, spacing, typography, and other design variables
+
+## Integration with Procore Connect
+
+### Realistic Possibilities
+
+#### 1. **Design Pattern Implementation**
+
+When designing new Procore Connect features, designers can:
+
+- **Select a frame** in Figma containing one of the [six core UX recipes](/user-experience/recipes)
+- **Generate implementation code** that follows Procore Connect patterns (External Items Indicator, Linked Items, etc.)
+- **Reference design system components** from the [Core design system](https://core.procore.com) that are already embedded in your designs
+
+<Info>
+The MCP server can extract information about your Figma components, including their structure, properties, and styling, which helps ensure generated code matches your design intent.
+</Info>
+
+#### 2. **Component Consistency**
+
+Designers working with the [Procore Connect component library](/user-experience/components) can:
+
+- **Map Figma components to code components** using Code Connect
+- **Ensure visual consistency** between design and implementation
+- **Reduce manual translation** of design specifications to code
+
+<Frame>
+<iframe className="w-full h-96 rounded-xl" title="Figma Component" src="https://embed.figma.com/design/z7EkfhvLpcMsFG6k1uwWSz/Procore-Connect--%22Good%22-Experience-Patterns-Library?node-id=103-5&embed-host=share" allowfullscreen></iframe>
+</Frame>
+
+#### 3. **Design Token Extraction**
+
+Extract design tokens directly from Figma files:
+
+- **Colors** - Procore Connect brand colors, status colors, semantic colors
+- **Spacing** - Consistent spacing scales used across components
+- **Typography** - Font families, sizes, weights, and line heights
+- **Variables** - Figma variables that can be mapped to CSS variables or design tokens in code
+
+### Theoretical Possibilities
+
+#### 1. **Documentation-Driven Design**
+
+Combine Figma designs with Procore Connect documentation:
+
+- **Reference UX patterns** documented in this site while generating code
+- **Validate designs** against [established recipes](/user-experience/recipes) before implementation
+- **Generate component documentation** that matches both design and code
+
+#### 2. **Pattern Validation**
+
+Use AI to validate designs against Procore Connect patterns:
+
+- **Check consistency** with [six core collaboration patterns](/user-experience/recipes)
+- **Identify missing patterns** that should be implemented
+- **Suggest improvements** based on documented UX research
+
+#### 3. **Cross-Platform Consistency**
+
+Ensure designs work across web and mobile:
+
+- **Generate responsive implementations** that match Figma designs
+- **Validate mobile patterns** against [mobile UX patterns](/user-experience/recipes)
+- **Ensure consistency** across platforms while maintaining platform-specific best practices
+
+## Benefits for Designers
+
+### Improved Workflow Efficiency
+
+1. **Faster Design-to-Code Handoff**
+   - Generate code directly from designs without manual translation
+   - Reduce back-and-forth between design and development teams
+   - Maintain design fidelity in implementation
+
+2. **Reduced Context Switching**
+   - Work in Figma while AI agents reference your designs from the IDE
+   - No need to manually export design specs or create redlines
+   - Designs stay in sync with implementation
+
+3. **Design System Adherence**
+   - Automatically reference Core design system components
+   - Ensure new designs follow established patterns
+   - Maintain consistency across the Procore Connect ecosystem
+
+### Enhanced Design Quality
+
+1. **Pattern Awareness**
+   - AI agents can reference this documentation while generating code
+   - Designs automatically align with [Procore Connect UX patterns](/user-experience/overview)
+   - Reduced risk of implementing patterns incorrectly
+
+2. **Component Reusability**
+   - Code Connect maps Figma components to actual code components
+   - Generated code uses existing Procore Connect components
+   - Less custom code means easier maintenance
+
+3. **Design Validation**
+   - Verify designs match documented patterns before implementation
+   - Catch inconsistencies early in the design process
+   - Ensure designs solve the right [jobs-to-be-done](/user-experience/recipes)
+
+## Benefits for Product Quality
+
+### Implementation Accuracy
+
+1. **Design Fidelity**
+   - Generated code matches Figma designs pixel-perfectly (when appropriate)
+   - Spacing, colors, and typography extracted directly from design files
+   - Reduced visual discrepancies between design and implementation
+
+2. **Consistency Across Features**
+   - All implementations follow the same design system
+   - Consistent use of [External Items Indicators](/user-experience/components#external-items-indicator) and [Linked Items](/user-experience/components#linked-items)
+   - Unified experience across Procore Connect features
+
+3. **Pattern Compliance**
+   - Generated code follows [six core UX recipes](/user-experience/recipes)
+   - Ensures all features solve cross-account collaboration problems correctly
+   - Maintains consistency with validated user research
+
+### Development Velocity
+
+1. **Faster Implementation**
+   - Less time translating designs to code
+   - Automated code generation from designs
+   - More time for refinement and user testing
+
+2. **Fewer Implementation Errors**
+   - Design tokens extracted directly from Figma
+   - Reduced manual copy-paste errors
+   - Consistent spacing and styling
+
+3. **Better Maintainability**
+   - Code uses existing design system components
+   - Changes to design system automatically propagate
+   - Less custom code to maintain
+
+## Setup Instructions
+
+### Prerequisites
+
+- Figma desktop app (latest version)
+- Dev Mode or Full seat on Professional, Organization, or Enterprise plan
+- MCP-compatible editor (Cursor, VS Code, Claude Code, etc.)
+
+### Enable Desktop MCP Server
+
+<Steps>
+<Step title="Open Figma Desktop App">
+  Make sure you're using the latest version of the Figma desktop app and have a Procore Connect design file open.
+</Step>
+
+<Step title="Enable Dev Mode">
+  Toggle to Dev Mode using the keyboard shortcut `Shift + D` or click the Dev Mode toggle in the toolbar.
+</Step>
+
+<Step title="Enable MCP Server">
+  In the **MCP server** section of the inspect panel, click **Enable desktop MCP server**.
+  
+  <Info>
+  The server runs locally at `http://127.0.0.1:3845/mcp`. You'll need this address for your editor configuration.
+  </Info>
+</Step>
+
+<Step title="Connect to Your Editor">
+  Follow the setup instructions for your specific editor:
+  
+  - [Cursor setup](/ai-tools/cursor)
+  - [VS Code](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/#vs-code)
+  - [Claude Code](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/#claude-code)
+</Step>
+</Steps>
+
+### Using Remote MCP Server
+
+Alternatively, you can use the remote server at `https://mcp.figma.com/mcp`:
+
+<Tip>
+The remote server is available on all seats and plans, but users on Starter plans or with View/Collab seats are limited to 6 tool calls per month. Dev and Full seats have per-minute rate limits matching the Tier 1 Figma REST API.
+</Tip>
+
+## Usage Examples
+
+### Example 1: Generate Code from a Recipe Design
+
+1. Open a Figma frame containing a design for "Send Copies of Internal Data"
+2. Select the frame in Figma
+3. In your IDE, prompt your AI assistant: *"Generate React code for this design following the Procore Connect 'Send Copies of Internal Data' pattern from the documentation"*
+4. The AI will reference both the Figma design and the [documented recipe](/user-experience/recipes#send-copies-of-internal-data) to generate accurate code
+
+### Example 2: Extract Design Tokens
+
+1. Select a component in Figma that uses Procore Connect design tokens
+2. Prompt: *"Extract all design tokens (colors, spacing, typography) from this Figma component and generate CSS variables"*
+3. Use the extracted tokens in your implementation
+
+### Example 3: Validate Design Against Patterns
+
+1. Design a new cross-account collaboration feature
+2. Prompt: *"Check if this design follows Procore Connect UX patterns and suggest improvements based on the six core recipes"*
+3. Get feedback on pattern compliance before implementation
+
+## Best Practices
+
+### For Designers
+
+1. **Use Consistent Component Names**
+   - Name Figma components to match Procore Connect terminology
+   - Use descriptive names that reference the [UX recipes](/user-experience/recipes)
+
+2. **Organize Frames by Pattern**
+   - Group designs by the [six core recipes](/user-experience/recipes)
+   - Make it easy for AI to understand which pattern you're implementing
+
+3. **Leverage Code Connect**
+   - Map Figma components to actual code components
+   - Ensure generated code uses existing Procore Connect components
+
+4. **Reference Documentation**
+   - Include links to relevant documentation in Figma frame descriptions
+   - Help AI agents understand the context and requirements
+
+### For Developers
+
+1. **Validate Generated Code**
+   - Review generated code against [UX recipes](/user-experience/recipes)
+   - Ensure it follows [component patterns](/user-experience/components)
+   - Test with real Procore Connect data flows
+
+2. **Use Design Tokens**
+   - Extract and use design tokens from Figma
+   - Maintain consistency with the design system
+   - Avoid hardcoding values
+
+3. **Maintain Code Connect Maps**
+   - Keep Figma-to-code component mappings up to date
+   - Ensure new components are properly mapped
+   - Help designers generate better code
+
+## Resources
+
+- [Figma MCP Server Documentation](https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server)
+- [Figma MCP Developer Documentation](https://developers.figma.com/docs/figma-mcp-server/)
+- [Procore Connect UX Recipes](/user-experience/recipes)
+- [Procore Connect Components](/user-experience/components)
+- [Core Design System](https://core.procore.com)
+
+---
+
+<Callout icon="life-ring">
+Questions about using Figma MCP with Procore Connect? Reach out to dave.stein@procore.com or visit `#pcor-connect-design`.
+</Callout>
