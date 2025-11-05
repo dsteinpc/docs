@@ -1,3 +1,141 @@
 ---
 title: "By Role"
+description: "Role-specific guidance for designers, technical leads, and product managers getting started with Procore Connect"
 ---
+
+## Getting started by role
+
+Whether you're a designer, technical lead, or product manager, this guide provides role-specific guidance to help you get started with Procore Connect.
+
+<AccordionGroup>
+  <Accordion icon="paintbrush" title="For Designers: Review UX patterns and components">
+    Start by understanding the available UX patterns and how they can be integrated into your solution:
+    
+    1. **Review UX Recipes** - Explore the [six core collaboration patterns](/user-experience/recipes):
+       - Send Copies of Internal Data
+       - Link External Objects to Internal Objects
+       - Engage with External Items
+       - Create Copies of External Data
+       - Monitor Status of Data Sent to Other Accounts
+       - Retain External Data
+    
+    2. **Study UX Components** - Review reusable [components and patterns](/user-experience/components) that maintain consistency across solutions
+    
+    3. **Explore Examples** - See [real-world examples](/user-experience/examples) of how these patterns are implemented
+    
+    4. **Review Research** - Understand the [user research and validation](/user-experience/research) behind these patterns
+    
+    <Tip>Start with one pattern that solves your most critical customer pain point, then expand to additional patterns as needed.</Tip>
+  </Accordion>
+  
+  <Accordion icon="code" title="For Technical Leads: Review API capabilities">
+    Understand the technical foundation and implementation requirements:
+    
+    1. **Review Core APIs** - Understand the three foundational APIs:
+       - [Share API](/api-reference/user-api/introduction#1-share-api) - Share data between accounts
+       - [Query API](/api-reference/user-api/introduction#2-query-api) - Query items across accounts
+       - [Permissions API](/api-reference/user-api/introduction#3-permissions-api) - Verify sharing permissions
+    
+    2. **Explore Endpoints** - Review [UX Behavior Endpoints](/api-reference/introduction#ux-behavior-endpoints) that map to specific collaboration patterns
+    
+    3. **Review Implementation Guides** - Check [Engineering Overview](/engineering/overview) for front-end and back-end implementation guidance
+    
+    4. **Reference OpenAPI Spec** - Use the [OpenAPI specification](/api-reference/user-api-openapi.json) for complete endpoint documentation
+    
+    <Tip>Familiarize yourself with the API structure before planning implementation. The endpoints are organized by UX behavior, making it easier to map to your design patterns.</Tip>
+  </Accordion>
+  
+  <Accordion icon="clipboard-list" title="For Product Managers: Plan your integration">
+    Create a clear plan for integrating Procore Connect into your solution:
+    
+    1. **Map customer needs to patterns** - Identify which [UX recipes](/user-experience/recipes) address your customer pain points
+    
+    2. **Prioritize implementation** - Start with the pattern that provides the most value with the least complexity
+    
+    3. **Define success metrics** - Establish how you'll measure impact:
+       - Reduction in manual data entry
+       - Time saved in cross-account workflows
+       - Customer satisfaction improvements
+       - Adoption rates of Procore Connect features
+    
+    4. **Plan phased rollout** - Consider implementing one pattern at a time, validate with customers, then expand
+    
+    5. **Review platform resources** - Check [Solution Coverage](/platform-resources/solution-coverage) and [Customer Impact](/platform-resources/customer-impact) for additional context
+    
+    <Tip>Work closely with your design and engineering leads to ensure the chosen patterns align with your solution's UX and technical architecture.</Tip>
+  </Accordion>
+</AccordionGroup>
+
+## Before you begin
+
+Before diving into implementation, ensure Procore Connect aligns with your team's strategic goals:
+
+<AccordionGroup>
+  <Accordion icon="list-check" title="Align with your roadmap priorities">
+    Ensure Procore Connect aligns with your team's strategic goals:
+    
+    1. **Identify cross-account collaboration needs** in your solution
+       - Where do your customers need to work with other Procore accounts?
+       - What workflows break when customers must collaborate externally?
+       - What customer pain points relate to cross-account scenarios?
+    
+    2. **Assess solution fit**
+       - Does your solution enable workflows that require multiple Procore accounts?
+       - Will Procore Connect capabilities address specific customer requests or support tickets?
+       - Are there existing workarounds that Procore Connect could replace?
+    
+    3. **Prioritize use cases**
+       - Review the [UX Recipes](/user-experience/recipes) to identify which patterns solve your customers' needs
+       - Consider starting with one pattern (e.g., "Send Copies of Internal Data") before expanding
+       - Align with product roadmap timelines and customer commitments
+    
+    <Warning>Don't implement Procore Connect just because it's available. Ensure it solves real customer problems that align with your roadmap.</Warning>
+  </Accordion>
+  
+  <Accordion icon="users" title="Communicate with leadership">
+    Before beginning implementation, ensure stakeholders understand the value and scope:
+    
+    **What to communicate:**
+    - **Business value:** How Procore Connect addresses customer pain points and improves collaboration
+    - **Solution scope:** Which Procore Connect patterns you plan to implement (review [UX Overview](/user-experience/overview) for options)
+    - **Timeline and resources:** Estimated effort based on the patterns you're implementing
+    - **Success metrics:** How you'll measure impact (reduced manual data entry, improved customer satisfaction, etc.)
+    
+    **Key talking points:**
+    - Procore Connect is **not** a complete redesign — it complements existing experiences
+    - It solves specific cross-account collaboration problems without changing core Procore workflows
+    - Implementation is discrete and stable, making it easier to integrate into existing solutions
+    
+    **Recommended approach:**
+    1. Schedule a brief stakeholder review to share your proposed Procore Connect integration
+    2. Present a concise summary of the customer problem and how Procore Connect addresses it
+    3. Show specific examples from the [UX Examples](/user-experience/examples) that match your use case
+    4. Outline a phased approach if implementing multiple patterns
+    
+    <Tip>Reference the [Business Context](/business-context) section to ensure you're communicating the right scope — Procore Connect is focused, not a complete platform overhaul.</Tip>
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+Continue your journey with the [Quickstart guide](/getting-started/quickstart) for a complete step-by-step approach, or dive deeper into role-specific resources:
+
+<CardGroup cols={2}>
+
+<Card title="User Experience" icon="paintbrush" href="/user-experience/overview">
+  Explore UX patterns, recipes, components, and examples for implementing Procore Connect experiences.
+</Card>
+
+<Card title="API Reference" icon="code" href="/api-reference/introduction">
+  Complete API documentation for all Procore Connect endpoints and capabilities.
+</Card>
+
+<Card title="Implementation Guides" icon="wrench" href="/engineering/overview">
+  Step-by-step technical guidance for front-end and back-end implementation.
+</Card>
+
+<Card title="Business Context" icon="briefcase" href="/business-context/overview">
+  Understand the scope, goals, and strategic context of Procore Connect.
+</Card>
+
+</CardGroup>
