@@ -1,0 +1,77 @@
+---
+title: 'Get User by UUID'
+api: 'GET /api/users/{uuid}'
+description: 'Retrieve a specific user by their unique identifier'
+---
+
+## Overview
+
+This endpoint retrieves detailed information about a specific user using their UUID.
+
+## Path Parameters
+
+<ParamField path="uuid" type="string" required>
+  The unique identifier (UUID) of the user to retrieve
+</ParamField>
+
+## Response
+
+<ResponseField name="user" type="object">
+  The user object (without password)
+
+  <Expandable title="user properties">
+    <ResponseField name="uuid" type="string">
+      Unique user identifier
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      User's full name
+    </ResponseField>
+
+    <ResponseField name="email" type="string">
+      User's email address
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl http://localhost:3001/api/users/e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6
+```
+
+```javascript JavaScript
+const uuid = 'e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6';
+const response = await fetch(`http://localhost:3001/api/users/${uuid}`);
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+uuid = 'e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6'
+response = requests.get(f'http://localhost:3001/api/users/{uuid}')
+data = response.json()
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Success Response (200)
+{
+  "user": {
+    "uuid": "e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+```
+
+```json Error - Not Found (404)
+{
+  "error": "User not found"
+}
+```
+
+</ResponseExample>

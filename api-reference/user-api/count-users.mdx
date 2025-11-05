@@ -1,0 +1,67 @@
+---
+title: 'Get User Count'
+api: 'GET /api/users/count'
+description: 'Get the total number of users in the system'
+---
+
+## Overview
+
+This endpoint returns the total count of users currently in the system. It's a lightweight way to get user statistics without fetching the entire user list.
+
+## Response
+
+<ResponseField name="count" type="integer">
+  Total number of users in the system
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Descriptive message about the count
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl http://localhost:3001/api/users/count
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:3001/api/users/count');
+const data = await response.json();
+console.log(`Total users: ${data.count}`);
+```
+
+```python Python
+import requests
+
+response = requests.get('http://localhost:3001/api/users/count')
+data = response.json()
+print(f"Total users: {data['count']}")
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Success Response (200)
+{
+  "count": 5,
+  "message": "Total users in system"
+}
+```
+
+```json Empty System (200)
+{
+  "count": 0,
+  "message": "Total users in system"
+}
+```
+
+</ResponseExample>
+
+## Use Cases
+
+This endpoint is useful for:
+- Dashboard statistics
+- Pagination calculations
+- System health monitoring
+- Analytics and reporting

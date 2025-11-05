@@ -1,0 +1,534 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Procore Connect API",
+    "version": "1.0.0",
+    "description": "Collaboration platform APIs for sharing data, querying items, and managing permissions across Procore projects",
+    "contact": {
+      "name": "Procore Connect Support",
+      "email": "support@procore.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/api/procore-connect/share": {
+      "post": {
+        "summary": "Share data between two parties",
+        "description": "Core collaboration experience centered around two parties sharing data. This is a point-in-time action abstracted from implementation details.",
+        "tags": [
+          "Procore Connect"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sourceProjectId",
+                  "targetProjectId",
+                  "itemId",
+                  "type"
+                ],
+                "properties": {
+                  "sourceProjectId": {
+                    "type": "string",
+                    "description": "ID of the source project sharing the data",
+                    "example": "PROJ-001"
+                  },
+                  "targetProjectId": {
+                    "type": "string",
+                    "description": "ID of the target project receiving the data",
+                    "example": "PROJ-002"
+                  },
+                  "itemId": {
+                    "type": "string",
+                    "description": "ID of the item being shared",
+                    "example": "ITEM-001"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "Implicit",
+                      "Explicit"
+                    ],
+                    "description": "Type of sharing - Implicit or Explicit",
+                    "example": "Explicit"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "Additional metadata for the share operation",
+                    "example": {
+                      "sharedBy": "user@example.com",
+                      "notes": "Shared for review"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Share operation successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Data shared successfully"
+                    },
+                    "share": {
+                      "type": "object",
+                      "properties": {
+                        "shareId": {
+                          "type": "string",
+                          "example": "SHARE-1234567890-abc123"
+                        },
+                        "sourceProjectId": {
+                          "type": "string",
+                          "example": "PROJ-001"
+                        },
+                        "targetProjectId": {
+                          "type": "string",
+                          "example": "PROJ-002"
+                        },
+                        "itemId": {
+                          "type": "string",
+                          "example": "ITEM-001"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "Explicit"
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "example": "2025-11-04T17:00:00.000Z"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "Completed"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required fields"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/query": {
+      "post": {
+        "summary": "Query an item in Procore's ecosystem",
+        "description": "Query a particular item within Procore's ecosystem and returns all its attribute fields available",
+        "tags": [
+          "Procore Connect"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "itemId",
+                  "type",
+                  "vendorId"
+                ],
+                "properties": {
+                  "itemId": {
+                    "type": "string",
+                    "description": "Unique identifier of the item",
+                    "example": "ITEM-001"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Type of the item (e.g., RFI, Drawing, Submittal)",
+                    "example": "RFI"
+                  },
+                  "vendorId": {
+                    "type": "string",
+                    "description": "Vendor identifier",
+                    "example": "VENDOR-123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Item found successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "item": {
+                      "type": "object",
+                      "properties": {
+                        "itemId": {
+                          "type": "string",
+                          "example": "ITEM-001"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "RFI"
+                        },
+                        "vendorId": {
+                          "type": "string",
+                          "example": "VENDOR-123"
+                        },
+                        "attributes": {
+                          "type": "object",
+                          "example": {
+                            "title": "Foundation Design Clarification",
+                            "status": "Open",
+                            "priority": "High"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required fields"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Item not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/permissions": {
+      "post": {
+        "summary": "Verify sharing permissions",
+        "description": "Verify that a sharing action is permissible before data is shared. Checks if a user has permission to share in a specific project.",
+        "tags": [
+          "Procore Connect"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "userId",
+                  "projectId"
+                ],
+                "properties": {
+                  "userId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "User identifier",
+                    "example": 100001
+                  },
+                  "projectId": {
+                    "type": "string",
+                    "description": "Project identifier",
+                    "example": "PROJ-001"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Permission check completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "userId": {
+                      "type": "integer",
+                      "example": 100001
+                    },
+                    "projectId": {
+                      "type": "string",
+                      "example": "PROJ-001"
+                    },
+                    "canShare": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "Project Manager"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User has permission to share in this project"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required fields"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "canShare": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User does not have permission to share in this project"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User or project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User permission not found for this project"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procore-connect/share/history": {
+      "get": {
+        "summary": "Get share history",
+        "description": "Retrieve all share operations that have been performed",
+        "tags": [
+          "Procore Connect"
+        ],
+        "responses": {
+          "200": {
+            "description": "Share history retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 5
+                    },
+                    "history": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "shareId": {
+                            "type": "string",
+                            "example": "SHARE-1234567890-abc123"
+                          },
+                          "sourceProjectId": {
+                            "type": "string",
+                            "example": "PROJ-001"
+                          },
+                          "targetProjectId": {
+                            "type": "string",
+                            "example": "PROJ-002"
+                          },
+                          "itemId": {
+                            "type": "string",
+                            "example": "ITEM-001"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "Explicit"
+                          },
+                          "timestamp": {
+                            "type": "string",
+                            "example": "2025-11-04T17:00:00.000Z"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "Completed"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": [
+    {
+      "name": "Procore Connect",
+      "description": "APIs for Procore Connect collaboration platform"
+    }
+  ]
+}

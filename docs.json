@@ -1,13 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Procore Connect",
+  "openapi": "api-reference/user-api-openapi.json",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#8d6e5b",
+    "light": "#ff5200",
+    "dark": "#566578"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/procore-favicon.svg",
   "navigation": {
     "tabs": [
       {
@@ -17,32 +18,53 @@
             "group": "Getting started",
             "pages": [
               "index",
-              "quickstart",
-              "development"
+              "getting-started/quickstart",
+              "getting-started/by-role"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Business Context",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "business-context/overview",
+              "business-context/scope",
+              "business-context/goals"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "User Experience",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "user-experience/overview",
+              "user-experience/recipes",
+              "user-experience/components",
+              "user-experience/examples",
+              "user-experience/research"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Implementation",
+            "pages": [
+              "engineering/overview",
+              "engineering/front-end",
+              "engineering/back-end"
+            ]
+          },
+          {
+            "group": "Tooling",
             "pages": [
               "ai-tools/cursor",
               "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "ai-tools/figma",
+              "ai-tools/mcp"
+            ]
+          },
+          {
+            "group": "Platform Resources",
+            "pages": [
+              "platform-resources/glossary",
+              "platform-resources/customer-impact",
+              "platform-resources/analytics",
+              "platform-resources/solution-coverage",
+              "platform-resources/support"
             ]
           }
         ]
@@ -57,34 +79,20 @@
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Procore Connect API",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/user-api/introduction"
             ]
           }
         ]
+      },
+      {
+        "tab": "Changelog"
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
-    "light": "/logo/light.svg",
+    "light": "/logo/Procore_Light.svg",
     "dark": "/logo/dark.svg"
   },
   "navbar": {
@@ -96,21 +104,21 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
+      "label": "Developer Dashboard",
       "href": "https://dashboard.mintlify.com"
     }
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {

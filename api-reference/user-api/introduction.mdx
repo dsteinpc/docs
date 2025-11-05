@@ -1,0 +1,128 @@
+---
+title: 'Procore Connect API'
+description: 'Collaboration platform APIs for sharing data, querying items, and managing permissions across Procore projects'
+---
+
+## Welcome to Procore Connect
+
+Procore Connect is a collaboration platform that enables seamless data sharing and interaction across Procore projects. The API provides three core capabilities for managing project collaboration workflows.
+
+## Base URL
+
+```
+http://localhost:3001
+```
+
+## Core APIs
+
+<CardGroup cols={3}>
+  <Card
+    title="Share API"
+    icon="share-nodes"
+  >
+    Share data between two parties with point-in-time collaboration
+  </Card>
+  <Card
+    title="Query API"
+    icon="magnifying-glass"
+  >
+    Query items in Procore's ecosystem and retrieve all attributes
+  </Card>
+  <Card
+    title="Permissions API"
+    icon="shield-check"
+  >
+    Verify sharing permissions before data exchange
+  </Card>
+</CardGroup>
+
+## API Features
+
+### 1. Share API
+The core of the collaboration experience is centered around two parties sharing data with each other. This is a point-in-time action, intentionally abstracted from implementation details.
+
+**Share Types:**
+- **Implicit** - Automatic sharing based on predefined rules
+- **Explicit** - Manual sharing action initiated by user
+
+**Request Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `sourceProjectId` | string | ID of the source project sharing the data |
+| `targetProjectId` | string | ID of the target project receiving the data |
+| `itemId` | string | ID of the item being shared |
+| `type` | enum | Implicit or Explicit |
+| `metadata` | object | Additional metadata for the share operation |
+
+### 2. Query API
+Query specific items within Procore's ecosystem and retrieve all available attribute fields. Supports multiple item types including RFIs, Drawings, Submittals, and more.
+
+**Query Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `itemId` | string | Unique item identifier |
+| `type` | string | Type of item (RFI, Drawing, etc.) |
+| `vendorId` | string | Vendor identifier |
+
+### 3. Permissions API
+Before data is shared, verify that the action is permissible. This validates user permissions in the context of specific projects.
+
+**Permission Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userId` | long | User identifier |
+| `projectId` | string | Project identifier |
+
+## Authentication
+
+Currently, this API does not require authentication. All endpoints are publicly accessible.
+
+<Warning>
+  This is a demonstration API. In production, you should implement proper authentication and authorization.
+</Warning>
+
+## Data Storage
+
+The API uses in-memory storage, meaning all data is stored in RAM and will be lost when the server restarts. This is suitable for development and testing purposes.
+
+<Note>
+  For production use, integrate a persistent database like PostgreSQL, MongoDB, or MySQL.
+</Note>
+
+## Error Handling
+
+The API returns standard HTTP status codes:
+
+| Status Code | Description |
+|-------------|-------------|
+| `200` | Success |
+| `201` | Created |
+| `400` | Bad Request (validation errors) |
+| `403` | Forbidden (permission denied) |
+| `404` | Not Found |
+| `500` | Internal Server Error |
+
+All error responses follow this format:
+
+```json
+{
+  "error": "Error message describing what went wrong"
+}
+```
+
+All successful responses include:
+
+```json
+{
+  "success": true,
+  "data": { ... }
+}
+```
+
+## Rate Limiting
+
+There are currently no rate limits on this API.
+
+## Support
+
+For questions or issues, please contact the Procore Connect support team.

@@ -1,0 +1,124 @@
+---
+title: 'Update User'
+api: 'PUT /api/users/{uuid}'
+description: 'Update user information by UUID'
+---
+
+## Overview
+
+This endpoint allows you to update one or more fields of an existing user. All fields are optional.
+
+## Path Parameters
+
+<ParamField path="uuid" type="string" required>
+  The unique identifier (UUID) of the user to update
+</ParamField>
+
+## Request Body
+
+<ParamField body="name" type="string">
+  Updated user's full name
+</ParamField>
+
+<ParamField body="email" type="string">
+  Updated user's email address (must be unique)
+</ParamField>
+
+<ParamField body="password" type="string">
+  Updated user's password
+</ParamField>
+
+## Response
+
+<ResponseField name="message" type="string">
+  Success message
+</ResponseField>
+
+<ResponseField name="user" type="object">
+  The updated user object (without password)
+
+  <Expandable title="user properties">
+    <ResponseField name="uuid" type="string">
+      User's unique identifier (unchanged)
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      Updated user's full name
+    </ResponseField>
+
+    <ResponseField name="email" type="string">
+      Updated user's email address
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl -X PUT http://localhost:3001/api/users/e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Updated",
+    "email": "johnupdated@example.com"
+  }'
+```
+
+```javascript JavaScript
+const uuid = 'e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6';
+const response = await fetch(`http://localhost:3001/api/users/${uuid}`, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name: 'John Updated',
+    email: 'johnupdated@example.com'
+  })
+});
+
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+uuid = 'e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6'
+response = requests.put(
+  f'http://localhost:3001/api/users/{uuid}',
+  json={
+    'name': 'John Updated',
+    'email': 'johnupdated@example.com'
+  }
+)
+
+data = response.json()
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Success Response (200)
+{
+  "message": "User updated successfully",
+  "user": {
+    "uuid": "e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6",
+    "name": "John Updated",
+    "email": "johnupdated@example.com"
+  }
+}
+```
+
+```json Error - Not Found (404)
+{
+  "error": "User not found"
+}
+```
+
+```json Error - Duplicate Email (400)
+{
+  "error": "User with this email already exists"
+}
+```
+
+</ResponseExample>

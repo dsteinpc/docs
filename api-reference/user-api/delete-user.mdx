@@ -1,0 +1,66 @@
+---
+title: 'Delete User'
+api: 'DELETE /api/users/{uuid}'
+description: 'Delete a user from the system by UUID'
+---
+
+## Overview
+
+This endpoint permanently deletes a user from the system. This action cannot be undone.
+
+<Warning>
+  This operation is irreversible. Make sure you want to permanently delete the user before proceeding.
+</Warning>
+
+## Path Parameters
+
+<ParamField path="uuid" type="string" required>
+  The unique identifier (UUID) of the user to delete
+</ParamField>
+
+## Response
+
+<ResponseField name="message" type="string">
+  Success message confirming deletion
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl -X DELETE http://localhost:3001/api/users/e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6
+```
+
+```javascript JavaScript
+const uuid = 'e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6';
+const response = await fetch(`http://localhost:3001/api/users/${uuid}`, {
+  method: 'DELETE'
+});
+
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+uuid = 'e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6'
+response = requests.delete(f'http://localhost:3001/api/users/{uuid}')
+data = response.json()
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Success Response (200)
+{
+  "message": "User deleted successfully"
+}
+```
+
+```json Error - Not Found (404)
+{
+  "error": "User not found"
+}
+```
+
+</ResponseExample>

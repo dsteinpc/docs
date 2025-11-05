@@ -1,0 +1,119 @@
+---
+title: 'Create User'
+api: 'POST /api/users'
+description: 'Create a new user with name, email, and password'
+---
+
+## Overview
+
+This endpoint allows you to create a new user in the system. All fields are required, and the email must be unique.
+
+## Request Body
+
+<ParamField body="name" type="string" required>
+  User's full name
+</ParamField>
+
+<ParamField body="email" type="string" required>
+  User's email address. Must be unique across all users.
+</ParamField>
+
+<ParamField body="password" type="string" required>
+  User's password. This will not be returned in any responses.
+</ParamField>
+
+## Response
+
+<ResponseField name="message" type="string">
+  Success message
+</ResponseField>
+
+<ResponseField name="user" type="object">
+  The created user object (without password)
+
+  <Expandable title="user properties">
+    <ResponseField name="uuid" type="string">
+      Auto-generated unique identifier
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      User's full name
+    </ResponseField>
+
+    <ResponseField name="email" type="string">
+      User's email address
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl -X POST http://localhost:3001/api/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "securepassword123"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:3001/api/users', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name: 'John Doe',
+    email: 'john@example.com',
+    password: 'securepassword123'
+  })
+});
+
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.post(
+  'http://localhost:3001/api/users',
+  json={
+    'name': 'John Doe',
+    'email': 'john@example.com',
+    'password': 'securepassword123'
+  }
+)
+
+data = response.json()
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Success Response (201)
+{
+  "message": "User created successfully",
+  "user": {
+    "uuid": "e5c1bc66-ed9e-4c54-87e9-10d83ce55bc6",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+```
+
+```json Error - Missing Fields (400)
+{
+  "error": "Missing required fields: name, email, and password are required"
+}
+```
+
+```json Error - Duplicate Email (400)
+{
+  "error": "User with this email already exists"
+}
+```
+
+</ResponseExample>
